@@ -34,8 +34,15 @@ func main() {
 	switch pluginName := os.Args[1]; pluginName {
 		case "webinarignition":
 			sourcePath = "/home/jeandre/code/wp_test/wp-content/plugins/webinarignition"
-			os.Mkdir("/home/jeandre/testcopy/webinarignition/versions/" + pluginVersion, 0755 )
-			targetArchive = "/home/jeandre/testcopy/webinarignition/versions/" + pluginVersion + "/webinarignition.zip"
+			err := os.Mkdir("/home/jeandre/backups/projects/webinarignition/versions/" + pluginVersion, 0755 )
+			if err != nil {
+				if os.IsExist(err) {
+					fmt.Println("ERROR: Directory already exists!")	
+				}
+				fmt.Println(err)
+				return			
+			}
+			targetArchive = "/home/jeandre/backups/projects/webinarignition/versions/" + pluginVersion + "/webinarignition.zip"
 		default:
 			fmt.Println("Invalid command. Usage: webinarignition 1.9.89")
 	}
