@@ -38,14 +38,14 @@ func main() {
 			targetArchive = "/home/jeandre/testcopy/webinarignition/versions/" + pluginVersion + "/webinarignition.zip"
 		default:
 			fmt.Println("Invalid command. Usage: webinarignition 1.9.89")
-
 	}
 
 	err := zipit(sourcePath, targetArchive)
 	if err != nil {
+		fmt.Println("-----------------------ERROR-----------------------")	
 		log.Fatal(err)
 	} else {
-		fmt.Print("copy finish")
+		fmt.Println("-----------------------Copy Finish-----------------------")	
 	}
 }
 
@@ -81,7 +81,7 @@ func zipit(source, target string) error {
 
 	info, err := os.Stat(source)
 	if err != nil {
-		return nil
+		return err
 	}
 
 	var baseDir string
