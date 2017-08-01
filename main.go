@@ -1,87 +1,53 @@
 package main
 
-// source https://gist.github.com/magicianzrh/d29d08f4fdd8b3c2f8ee
 import (
-	// "fmt"
+	"fmt"
+	"log"
 	"io"
-	// "log"
 	"os"
 	"archive/zip"
 	"path/filepath"
 	"strings"
 )
 
-// var pluginName string
-// var pluginVersion string
+var pluginName string // commandline arg 1 e.g. webinarignition
+var pluginVersion string // commandline arg 2 e.g. 1.9.89
+var sourcePath string
+var targetArchive string
 
 var excludeDirectories = []string{".git"}
 var excludeFiles = []string{"dev_readme.md", ".gitignore", ".gitattributes"}
 
 func main() {
 
-	// pluginName = os.Args[1]
-	// pluginVersion = os.Args[2]
-	source_path := "/home/jeandre/code/wp_test/wp-content/plugins/webinarignition"
-	// target_path := "/home/jeandre/testcopy/wi"
+	if len(os.Args) < 3 {
+		fmt.Println("----------------------------------------")
+		fmt.Println(" Package Plugin ")
+		fmt.Println(" ERROR: You are missing some arguments.")
+		fmt.Println(" Usage: webinarignition 1.9.89")
+		fmt.Println("----------------------------------------")		
+		return
+	}
 
-	zipit(source_path, "/home/jeandre/testcopy/wi.zip")
-	return
-	// err := copy_folder(source_path, target_path)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// } else {
-	// 	fmt.Print("copy finish")
-	// }
+	pluginVersion = os.Args[2]
 
+	switch pluginName := os.Args[1]; pluginName {
+		case "webinarignition":
+			sourcePath = "/home/jeandre/code/wp_test/wp-content/plugins/webinarignition"
+			os.Mkdir("/home/jeandre/testcopy/webinarignition/versions/" + pluginVersion, 0755 )
+			targetArchive = "/home/jeandre/testcopy/webinarignition/versions/" + pluginVersion + "/webinarignition.zip"
+		default:
+			fmt.Println("Invalid command. Usage: webinarignition 1.9.89")
+
+	}
+
+	err := zipit(sourcePath, targetArchive)
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Print("copy finish")
+	}
 }
-
-// func copy_folder(source string, dest string) (err error) {
-
-// 	sourceinfo, err := os.Stat(source)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	// fmt.Println(sourceinfo.Name())
-// 	if (directoryShouldBeExcluded(sourceinfo.Name())) {
-// 		return
-// 	}
-
-// 	// create destination directory
-// 	err = os.MkdirAll(dest, sourceinfo.Mode())
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	directory, _ := os.Open(source)
-
-// 	objects, err := directory.Readdir(-1)
-
-
-// 	for _, obj := range objects {
-		
-// 		sourcefilepointer := source + "/" + obj.Name()
-
-// 		destinationfilepointer := dest + "/" + obj.Name()
-
-// 		if obj.IsDir() {
-// 			err = copy_folder(sourcefilepointer, destinationfilepointer)
-// 			if err != nil {
-// 				fmt.Println(err)
-// 			}
-// 		} else {
-// 			if (fileShouldBeExcluded(obj.Name())) {
-// 				continue
-// 			}
-// 			err = copy_file(sourcefilepointer, destinationfilepointer)
-// 			if err != nil {
-// 				fmt.Println(err)
-// 			}
-// 		}
-
-// 	}
-// 	return
-// }
 
 func directoryShouldBeExcluded(fileinfo os.FileInfo) bool {
 	for _, exDirName := range excludeDirectories {
@@ -100,33 +66,6 @@ func fileShouldBeExcluded(fileinfo os.FileInfo) bool {
 		}
 	}
 	return false 	
-}
-
-func copy_file(source string, dest string) (err error) {
-	sourcefile, err := os.Open(source)
-	if err != nil {
-		return err
-	}
-
-	defer sourcefile.Close()
-
-	destfile, err := os.Create(dest)
-	if err != nil {
-		return err
-	}
-
-	defer destfile.Close()
-
-	_, err = io.Copy(destfile, sourcefile)
-	if err == nil {
-		sourceinfo, err := os.Stat(source)
-		if err != nil {
-			err = os.Chmod(dest, sourceinfo.Mode())
-		}
-
-	}
-
-	return
 }
 
 // zipit http://blog.ralch.com/tutorial/golang-working-with-zip/
