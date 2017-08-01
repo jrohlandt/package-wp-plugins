@@ -37,7 +37,7 @@ func main() {
 			err := os.Mkdir("/home/jeandre/backups/projects/webinarignition/versions/" + pluginVersion, 0755 )
 			if err != nil {
 				if os.IsExist(err) {
-					fmt.Println("ERROR: Directory already exists!")	
+					fmt.Println("ERROR: Directory already exists!")
 				}
 				fmt.Println(err)
 				return			
