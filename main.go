@@ -15,7 +15,7 @@ var pluginVersion string // commandline arg 2 e.g. 1.9.89
 var sourcePath string
 var targetArchive string
 
-var excludeDirectories = []string{".git", ".idea", ".vscode", "node_modules", "resources" }
+var excludeDirectories = []string{"dev_docs", ".git", ".idea", ".vscode", "node_modules", "resources" }
 var excludeFiles = []string{"dev_readme.md", ".gitignore", ".gitattributes", "polyfills.js", "package.json", "package-lock.json", ".nvmrc", "webpack.config.js", ".babelrc"}
 
 func main() {
