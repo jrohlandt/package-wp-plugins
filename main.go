@@ -43,6 +43,18 @@ func main() {
 				return			
 			}
 			targetArchive = "/home/jeandre/backups/projects/webinarignition/versions/" + pluginVersion + "/webinarignition.zip"
+
+		case "listeruption":
+			sourcePath = "/home/jeandre/code/wp_test/wp-content/plugins/listeruption2"
+			err := os.Mkdir("/home/jeandre/backups/projects/listeruption2/versions/" + pluginVersion, 0755 )
+			if err != nil {
+				if os.IsExist(err) {
+					fmt.Println("ERROR: Directory already exists!")
+				}
+				fmt.Println(err)
+				return			
+			}
+			targetArchive = "/home/jeandre/backups/projects/listeruption2/versions/" + pluginVersion + "/listeruption2.zip"
 		default:
 			fmt.Println("Invalid command. Usage: webinarignition 1.9.89")
 	}
