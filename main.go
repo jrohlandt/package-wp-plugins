@@ -16,7 +16,18 @@ var sourcePath string
 var targetArchive string
 
 var excludeDirectories = []string{"dev_docs", ".git", ".idea", ".vscode", "node_modules", "resources" }
-var excludeFiles = []string{"dev_readme.md", ".gitignore", ".gitattributes", "polyfills.js", "package.json", "package-lock.json", ".nvmrc", "webpack.config.js", ".babelrc"}
+var excludeFiles = []string{
+	"dev_readme.md", 
+	".gitignore", 
+	".gitattributes",
+	"composer.json",
+	"composer.lock",
+	"polyfills.js", 
+	"package.json", 
+	"package-lock.json", 
+	".nvmrc", 
+	"webpack.config.js", 
+	".babelrc"}
 
 func main() {
 
