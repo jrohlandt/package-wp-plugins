@@ -43,6 +43,19 @@ func main() {
 	pluginVersion = os.Args[2]
 
 	switch pluginName := os.Args[1]; pluginName {
+		case "scarcitybuilder":
+			sourcePath = "/home/jeandre/code/work/wp-homestead/wp-content/plugins/scarcitybuilder"
+			err := os.Mkdir("/home/jeandre/backups/projects/scarcitybuilder/versions/" + pluginVersion, 0755 )
+			if err != nil {
+				if os.IsExist(err) {
+					fmt.Println("ERROR: Directory already exists!")
+				}
+				fmt.Println(err)
+				return			
+			}
+			targetArchive = "/home/jeandre/backups/projects/scarcitybuilder/versions/" + pluginVersion + "/scarcitybuilder.zip"
+
+
 		case "webinarignition":
 			sourcePath = "/home/jeandre/code/wp_test/wp-content/plugins/webinarignition"
 			err := os.Mkdir("/home/jeandre/backups/projects/webinarignition/versions/" + pluginVersion, 0755 )
